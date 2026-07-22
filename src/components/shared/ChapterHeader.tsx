@@ -1,10 +1,5 @@
-import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
@@ -32,42 +27,12 @@ export default function ChapterHeader({
   number,
   className,
 }: ChapterHeaderProps) {
-  const numeralRef = useRef<HTMLSpanElement>(null);
-  const rootRef = useRef<HTMLDivElement>(null);
-
-  // Ghost numeral parallax drift: −40px across the header's scroll range.
-  useEffect(() => {
-    const numeral = numeralRef.current;
-    const root = rootRef.current;
-    if (!numeral || !root) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const tween = gsap.fromTo(
-      numeral,
-      { y: 0 },
-      {
-        y: -40,
-        ease: "none",
-        scrollTrigger: {
-          trigger: root,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
-      }
-    );
-    return () => {
-      tween.scrollTrigger?.kill();
-      tween.kill();
-    };
-  }, [number]);
-
   const words = title.split(" ");
 
   return (
-    <div ref={rootRef} className={cn("relative", className)}>
+    <div className={cn("relative", className)}>
       {number && (
         <span
-          ref={numeralRef}
           aria-hidden="true"
           className="pointer-events-none absolute -top-10 right-0 select-none font-serif text-[72px] font-bold leading-none text-transparent md:text-[140px]"
           style={{ WebkitTextStroke: "1px #CBBFA8" }}

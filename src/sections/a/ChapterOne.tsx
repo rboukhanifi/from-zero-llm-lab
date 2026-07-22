@@ -1,8 +1,6 @@
-import { useEffect, useRef, type ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
 import { motion, useInView } from "framer-motion";
 import { Check, ChevronDown } from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ChapterHeader from "@/components/shared/ChapterHeader";
 import CodeBlock from "@/components/shared/CodeBlock";
 import Callout from "@/components/shared/Callout";
@@ -15,8 +13,6 @@ import AttentionMesh from "@/sections/a/AttentionMesh";
 import PullLine from "@/sections/a/PullLine";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { cn } from "@/lib/utils";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
@@ -138,32 +134,6 @@ function BlankCard() {
  * including the pinned deep-learning cascade at stop 4.
  */
 export default function ChapterOne() {
-  const reduced = useReducedMotion();
-  const timelineRef = useRef<HTMLDivElement>(null);
-  const spineRef = useRef<HTMLDivElement>(null);
-
-  // Spine draws itself top→bottom, scrubbed to the timeline's scroll range.
-  useEffect(() => {
-    if (reduced) return;
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        spineRef.current,
-        { scaleY: 0 },
-        {
-          scaleY: 1,
-          ease: "none",
-          scrollTrigger: {
-            trigger: timelineRef.current,
-            start: "top 55%",
-            end: "bottom 55%",
-            scrub: true,
-          },
-        }
-      );
-    }, timelineRef);
-    return () => ctx.revert();
-  }, [reduced]);
-
   return (
     <section id="chapter-01" className="border-t border-line bg-paper">
       <div className="page-col py-[72px] md:py-[120px]">
@@ -174,14 +144,13 @@ export default function ChapterOne() {
           number="01"
         />
 
-        <div ref={timelineRef} className="relative mt-16 md:mt-24">
+        <div className="relative mt-16 md:mt-24">
           {/* Spine: faint full-height base + scrubbed draw overlay */}
           <div
             aria-hidden="true"
             className="absolute bottom-0 left-5 top-0 w-[2px] -translate-x-1/2 bg-line/50 md:left-1/2"
           />
           <div
-            ref={spineRef}
             aria-hidden="true"
             className="absolute bottom-0 left-5 top-0 w-[2px] origin-top -translate-x-1/2 bg-line-strong md:left-1/2"
           />

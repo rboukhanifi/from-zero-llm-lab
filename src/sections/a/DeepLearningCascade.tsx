@@ -1,12 +1,6 @@
-import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { cn } from "@/lib/utils";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const ROWS: { label: string; stages: string[] }[] = [
   { label: "For vision", stages: ["pixels", "edges", "shapes", "objects"] },
@@ -18,7 +12,6 @@ const ROWS: { label: string; stages: string[] }[] = [
 const TOTAL = ROWS.reduce((n, r) => n + r.stages.length, 0); // 9
 /** Stages light over the first 85% of pinned progress; the final 15% holds
  *  both rows fully lit before unpinning (segment-a spec). */
-const LIGHT_SPAN = 0.85;
 
 /**
  * Stop 4 pinned moment (segment-a spec): GSAP pin, 175vh. Two cascade rows
@@ -27,37 +20,12 @@ const LIGHT_SPAN = 0.85;
  * motion / no-pin fallback: static rows, all stages lit.
  */
 export default function DeepLearningCascade() {
-  const reduced = useReducedMotion();
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const [lit, setLit] = useState(0);
-
-  useEffect(() => {
-    if (reduced) {
-      setLit(TOTAL);
-      return;
-    }
-    const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: wrapRef.current,
-        start: "top top",
-        end: "+=175%",
-        pin: true,
-        onUpdate: (self) => {
-          const count = Math.min(
-            TOTAL,
-            Math.floor((self.progress / LIGHT_SPAN) * TOTAL + 1e-6)
-          );
-          setLit((prev) => (prev === count ? prev : count));
-        },
-      });
-    }, wrapRef);
-    return () => ctx.revert();
-  }, [reduced]);
+  const lit = TOTAL;
 
   let stageOffset = 0;
 
   return (
-    <div ref={wrapRef} className="mt-10">
+    <div className="mt-10">
       <div className="flex min-h-[100dvh] flex-col justify-center py-16">
         <p className="kicker text-center">Increasingly abstract representations</p>
         <div className="mt-10 space-y-10 md:space-y-14">

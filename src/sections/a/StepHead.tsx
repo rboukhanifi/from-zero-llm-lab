@@ -1,10 +1,5 @@
-import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import StepBadge from "@/components/shared/StepBadge";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
@@ -22,39 +17,11 @@ export default function StepHead({
   kicker: string;
   title: string;
 }) {
-  const rootRef = useRef<HTMLDivElement>(null);
-  const numeralRef = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    const numeral = numeralRef.current;
-    const root = rootRef.current;
-    if (!numeral || !root) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        numeral,
-        { y: 0 },
-        {
-          y: -30,
-          ease: "none",
-          scrollTrigger: {
-            trigger: root,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
-        }
-      );
-    }, root);
-    return () => ctx.revert();
-  }, []);
-
   const num = String(step).padStart(2, "0");
 
   return (
-    <div ref={rootRef} className="relative">
+    <div className="relative">
       <span
-        ref={numeralRef}
         aria-hidden="true"
         className="pointer-events-none absolute -top-8 right-0 select-none font-serif text-[64px] font-bold leading-none text-transparent md:text-[110px]"
         style={{ WebkitTextStroke: "1px #CBBFA8" }}

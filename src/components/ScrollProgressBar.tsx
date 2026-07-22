@@ -1,13 +1,9 @@
 import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 /**
  * Fixed 3px ember progress bar at the very top of the viewport; scaleX is
- * driven by total page scroll progress via GSAP ScrollTrigger scrub 0.3
- * (design.md §5). Sits above everything (z-50).
+ * driven by total page scroll progress. A passive native listener keeps the
+ * indicator lightweight and schedules at most one update per frame.
  */
 export default function ScrollProgressBar() {
   const barRef = useRef<HTMLDivElement>(null);
@@ -15,23 +11,23 @@ export default function ScrollProgressBar() {
   useEffect(() => {
     const bar = barRef.current;
     if (!bar) return;
-    const tween = gsap.fromTo(
-      bar,
-      { scaleX: 0 },
-      {
-        scaleX: 1,
-        ease: "none",
-        scrollTrigger: {
-          start: 0,
-          end: "max",
-          scrub: 0.3,
-          invalidateOnRefresh: true,
-        },
-      }
-    );
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = max > 0 ? Math.min(1, window.scrollY / max) : 0;
+      bar.style.transform = `scaleX(${progress})`;
+    };
+    const schedule = () => {
+      if (!frame) frame = window.requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
     return () => {
-      tween.scrollTrigger?.kill();
-      tween.kill();
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      if (frame) window.cancelAnimationFrame(frame);
     };
   }, []);
 

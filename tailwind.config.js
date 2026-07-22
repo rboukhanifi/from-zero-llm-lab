@@ -1,7 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  // Scan only code that ships. The starter includes a large unused UI catalog;
+  // excluding it keeps those utilities out of the production stylesheet.
+  content: [
+    './index.html',
+    './src/*.{js,ts,jsx,tsx}',
+    './src/components/*.{js,ts,jsx,tsx}',
+    './src/components/shared/**/*.{js,ts,jsx,tsx}',
+    './src/components/ui/dialog.tsx',
+    './src/hooks/**/*.{js,ts,jsx,tsx}',
+    './src/lib/**/*.{js,ts,jsx,tsx}',
+    './src/sections/**/*.{js,ts,jsx,tsx}',
+  ],
   theme: {
     extend: {
       fontFamily: {
