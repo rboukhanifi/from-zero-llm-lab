@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { MotionConfig } from "framer-motion";
 import SmoothScroll from "@/components/SmoothScroll";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import TopBar from "@/components/TopBar";
@@ -17,23 +18,25 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <SmoothScroll>
-      <ScrollProgressBar />
-      <TopBar onOpenMenu={() => setMenuOpen(true)} />
-      <ChapterNavRail />
-      <ChapterMenu open={menuOpen} onOpenChange={setMenuOpen} />
-      <main>
-        <Hero />
-        <Contents />
-        <SegmentA />
-        <Chapter02 />
-        <SegmentB />
-        <SegmentC />
-        <SegmentD />
-      </main>
-      <Footer />
-      {/* Paper grain overlay — fixed full-page SVG noise (design.md §7.6) */}
-      <div className="paper-grain" aria-hidden="true" />
-    </SmoothScroll>
+    <MotionConfig reducedMotion="always">
+      <SmoothScroll>
+        <ScrollProgressBar />
+        <TopBar onOpenMenu={() => setMenuOpen(true)} />
+        <ChapterNavRail />
+        <ChapterMenu open={menuOpen} onOpenChange={setMenuOpen} />
+        <main>
+          <Hero />
+          <Contents />
+          <SegmentA />
+          <Chapter02 />
+          <SegmentB />
+          <SegmentC />
+          <SegmentD />
+        </main>
+        <Footer />
+        {/* Paper grain overlay — fixed full-page SVG noise (design.md §7.6) */}
+        <div className="paper-grain" aria-hidden="true" />
+      </SmoothScroll>
+    </MotionConfig>
   );
 }
