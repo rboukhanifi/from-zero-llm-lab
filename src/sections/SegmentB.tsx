@@ -255,7 +255,7 @@ const CHECKPOINT_SAVES = [
 /** Chapter 3 — What the training infrastructure does (paper band). */
 function InfrastructureChapter() {
   return (
-    <section id="chapter-03" className="border-t border-line bg-paper py-[72px] md:py-[120px]">
+    <section id="chapter-03" className="border-t border-line bg-paper py-14 md:py-20">
       <div className="page-col">
         <ChapterHeader
           kicker="CHAPTER 03"
@@ -364,7 +364,7 @@ function HarnessCard({ icon: Icon, title, body, index }: HarnessCardProps) {
 /** Chapter 4 — What is a training harness? (paper-deep band). */
 function HarnessChapter() {
   return (
-    <section id="chapter-04" className="border-t border-line bg-paper-deep py-[72px] md:py-[120px]">
+    <section id="chapter-04" className="border-t border-line bg-paper-deep py-14 md:py-20">
       <div className="page-col">
         <ChapterHeader
           kicker="CHAPTER 04"

@@ -1,8 +1,4 @@
-import { useEffect, useRef } from "react";
-import { animate, motion, useInView } from "framer-motion";
 import { cn } from "@/lib/utils";
-
-const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
 export interface ProbBarProps {
   /** Token/label text (mono, fixed 90px column). */
@@ -53,28 +49,11 @@ export default function ProbBar({
   showFootnote = false,
   className,
 }: ProbBarProps) {
-  const rootRef = useRef<HTMLDivElement>(null);
-  const valueRef = useRef<HTMLSpanElement>(null);
-  const inView = useInView(rootRef, { once: true, margin: "-15% 0px" });
-  const delay = index * 0.12;
   const widthPct = Math.max(2, Math.min(100, value));
-
-  // Count-up of the value readout, timed with the fill.
-  useEffect(() => {
-    if (!inView || !valueRef.current) return;
-    const controls = animate(0, value, {
-      duration: 1,
-      delay,
-      ease: EASE_OUT_EXPO,
-      onUpdate: (v) => {
-        if (valueRef.current) valueRef.current.textContent = formatValue(v);
-      },
-    });
-    return () => controls.stop();
-  }, [inView, value, delay, formatValue]);
+  void index;
 
   return (
-    <div ref={rootRef} className={className}>
+    <div className={className}>
       <div className="flex min-w-[320px] items-center gap-4">
         <span className="flex w-[90px] shrink-0 items-center gap-1.5 font-mono text-[13px] font-medium text-ink">
           {label}
@@ -96,18 +75,13 @@ export default function ProbBar({
           )}
         </span>
         <span className="h-2 flex-1 overflow-hidden rounded-full bg-paper-deep">
-          <motion.span
+          <span
             className={cn("block h-full rounded-full", FILL_CLASSES[variant])}
-            initial={{ width: "0%" }}
-            animate={inView ? { width: `${widthPct}%` } : { width: "0%" }}
-            transition={{ duration: 1, delay, ease: EASE_OUT_EXPO }}
+            style={{ width: `${widthPct}%` }}
           />
         </span>
-        <span
-          ref={valueRef}
-          className="w-[72px] shrink-0 text-right font-mono text-[13px] font-medium tabular-nums text-ink-soft"
-        >
-          {formatValue(0)}
+        <span className="w-[72px] shrink-0 text-right font-mono text-[13px] font-medium tabular-nums text-ink-soft">
+          {formatValue(value)}
         </span>
       </div>
       {showFootnote && (

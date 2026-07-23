@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { motion } from "framer-motion";
 import { AlertTriangle, CheckCircle2, Flame, Info, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -46,11 +45,7 @@ export default function Callout({
   const Icon = icon === undefined ? v.icon : icon;
 
   return (
-    <motion.aside
-      initial={{ opacity: 0, y: 28 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-15% 0px" }}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+    <aside
       className={cn(
         "relative overflow-hidden rounded-xl border border-line bg-paper-raise p-5",
         className
@@ -73,6 +68,6 @@ export default function Callout({
       <div className="text-[16px] leading-[1.7] text-ink-soft [&_strong]:font-semibold [&_strong]:text-ink">
         {children}
       </div>
-    </motion.aside>
+    </aside>
   );
 }

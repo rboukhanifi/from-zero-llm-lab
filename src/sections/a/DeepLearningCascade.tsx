@@ -26,7 +26,7 @@ export default function DeepLearningCascade() {
 
   return (
     <div className="mt-10">
-      <div className="flex min-h-[100dvh] flex-col justify-center py-16">
+      <div className="flex flex-col justify-center py-8">
         <p className="kicker text-center">Increasingly abstract representations</p>
         <div className="mt-10 space-y-10 md:space-y-14">
           {ROWS.map((row) => {

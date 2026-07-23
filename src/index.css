@@ -45,8 +45,8 @@
   }
   body {
     @apply bg-paper text-ink font-sans antialiased;
-    font-size: 17.5px;
-    line-height: 1.75;
+    font-size: 17px;
+    line-height: 1.8;
     text-rendering: optimizeLegibility;
   }
   @media (max-width: 767px) {
@@ -56,6 +56,10 @@
   }
   h1, h2, h3, .font-serif {
     font-feature-settings: "liga";
+    text-wrap: balance;
+  }
+  p, li {
+    text-wrap: pretty;
   }
   ::selection {
     background: #F7E4D5;
@@ -80,18 +84,6 @@
 }
 
 @layer components {
-  /* Paper grain — fixed full-page SVG feTurbulence noise overlay at 3.5%
-     opacity, multiply blend (design.md §7.6). Pure inline SVG, no asset. */
-  .paper-grain {
-    position: fixed;
-    inset: 0;
-    z-index: 60;
-    pointer-events: none;
-    opacity: 0.035;
-    mix-blend-mode: multiply;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23g)'/%3E%3C/svg%3E");
-  }
-
   /* Kicker / eyebrow — uppercase mono with leading ember square (design.md §3) */
   .kicker {
     @apply font-mono text-[12.5px] max-md:text-[11.5px] font-medium uppercase text-ember;
@@ -108,15 +100,10 @@
     @apply mx-auto w-full max-w-[680px] px-6 md:px-0;
   }
   .page-col {
-    @apply mx-auto w-full max-w-[1200px] px-6 md:px-10;
-  }
-  .wide-col {
     @apply mx-auto w-full max-w-[1080px] px-6 md:px-10;
   }
-
-  /* Static hero scroll cue: orientation without a perpetual loop. */
-  .scroll-cue-segment {
-    transform: translateY(160%);
+  .wide-col {
+    @apply mx-auto w-full max-w-[1000px] px-6 md:px-10;
   }
 }
 

@@ -1,5 +1,4 @@
-import { useRef, type ReactNode } from "react";
-import { motion, useInView } from "framer-motion";
+import type { ReactNode } from "react";
 import { Check, ChevronDown } from "lucide-react";
 import ChapterHeader from "@/components/shared/ChapterHeader";
 import CodeBlock from "@/components/shared/CodeBlock";
@@ -11,32 +10,19 @@ import NeuralNetMini from "@/sections/a/NeuralNetMini";
 import SequenceRow from "@/sections/a/SequenceRow";
 import AttentionMesh from "@/sections/a/AttentionMesh";
 import PullLine from "@/sections/a/PullLine";
-import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { cn } from "@/lib/utils";
-
-const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
 /** Spine node: 12px circle, line-strong border, paper fill → ember when passed. */
 function SpineNode() {
-  const ref = useRef<HTMLSpanElement>(null);
-  const passed = useInView(ref, { once: true, margin: "-45% 0px" });
   return (
-    <motion.span
-      ref={ref}
+    <span
       aria-hidden="true"
-      initial={{ scale: 0 }}
-      animate={passed ? { scale: 1 } : { scale: 0 }}
-      transition={{ duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }}
-      className={cn(
-        "absolute left-5 top-7 z-10 block h-3 w-3 -translate-x-1/2 rounded-full border-[1.5px] transition-colors duration-500 md:left-1/2",
-        passed ? "border-ember bg-ember" : "border-line-strong bg-paper"
-      )}
+      className="absolute left-5 top-7 z-10 block h-3 w-3 -translate-x-1/2 rounded-full border-[1.5px] border-ember bg-ember"
     />
   );
 }
 
 function TimelineCard({
-  side,
+  side: _side,
   label,
   children,
 }: {
@@ -45,23 +31,9 @@ function TimelineCard({
   children: ReactNode;
 }) {
   return (
-    <div
-      className={cn(
-        "ml-12 md:ml-0 md:grid md:grid-cols-2 md:gap-24",
-        side === "right" && "md:[&>*]:col-start-2"
-      )}
-    >
-      <motion.div
-        initial={{ opacity: 0, y: 28 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-15% 0px" }}
-        transition={{ duration: 0.7, ease: EASE }}
-        className={cn(
-          "flex",
-          side === "left" ? "md:justify-end" : "md:justify-start"
-        )}
-      >
-        <div className="w-full max-w-[480px] rounded-[14px] border border-line bg-paper-raise p-6">
+    <div className="ml-12">
+      <div className="flex">
+        <div className="w-full max-w-[720px] rounded-lg border border-line bg-paper-raise p-6 md:p-7">
           <p className="font-mono text-[11.5px] font-medium uppercase tracking-[0.14em] text-ember">
             {label}
           </p>
@@ -69,47 +41,32 @@ function TimelineCard({
             {children}
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }
 
 /** Ember chevron-down bouncing in a 1.4s loop (static under reduced motion). */
 function BouncingChevron() {
-  const reduced = useReducedMotion();
   return (
-    <motion.div
-      aria-hidden="true"
-      animate={reduced ? {} : { y: [0, 7, 0] }}
-      transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
-      className="flex justify-center text-ember"
-    >
+    <div aria-hidden="true" className="flex justify-center text-ember">
       <ChevronDown className="size-6" strokeWidth={2.5} />
-    </motion.div>
+    </div>
   );
 }
 
 /** The France fill-in-the-blank card with shimmering ghost blank. */
 function BlankCard() {
-  const reduced = useReducedMotion();
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 28 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-15% 0px" }}
-      transition={{ duration: 0.7, ease: EASE }}
+    <div
       className="mx-auto w-full max-w-[720px] rounded-[14px] border border-line bg-paper-raise px-6 py-10 text-center md:py-12"
     >
       <p className="flex flex-wrap items-baseline justify-center gap-2 font-mono text-[17px] leading-[1.6] text-ink md:text-[22px]">
         <span>The capital of France is</span>
         <TokenChip variant="ghost" className="px-4">
-          <motion.span
-            aria-label="blank to fill in"
-            animate={reduced ? {} : { opacity: [1, 0.25, 1] }}
-            transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
-          >
+          <span aria-label="blank to fill in">
             ___
-          </motion.span>
+          </span>
         </TokenChip>
       </p>
       <p className="mx-auto mt-5 max-w-[480px] text-[15px] leading-[1.7] text-ink-soft">
@@ -124,7 +81,7 @@ function BlankCard() {
       <p className="mt-4 text-[15.5px] leading-[1.7] text-ink-soft">
         This is called <strong className="font-semibold text-ink">self-supervised learning</strong>.
       </p>
-    </motion.div>
+    </div>
   );
 }
 
@@ -136,7 +93,7 @@ function BlankCard() {
 export default function ChapterOne() {
   return (
     <section id="chapter-01" className="border-t border-line bg-paper">
-      <div className="page-col py-[72px] md:py-[120px]">
+      <div className="page-col py-14 md:py-20">
         <ChapterHeader
           kicker="CHAPTER 01"
           title="The conceptual path from basic ML to LLMs"
@@ -148,11 +105,11 @@ export default function ChapterOne() {
           {/* Spine: faint full-height base + scrubbed draw overlay */}
           <div
             aria-hidden="true"
-            className="absolute bottom-0 left-5 top-0 w-[2px] -translate-x-1/2 bg-line/50 md:left-1/2"
+            className="absolute bottom-0 left-5 top-0 w-[2px] -translate-x-1/2 bg-line/50"
           />
           <div
             aria-hidden="true"
-            className="absolute bottom-0 left-5 top-0 w-[2px] origin-top -translate-x-1/2 bg-line-strong md:left-1/2"
+            className="absolute bottom-0 left-5 top-0 w-[2px] origin-top -translate-x-1/2 bg-line-strong"
           />
 
           {/* Stop 1 — Rule-based software */}
@@ -286,17 +243,11 @@ export default function ChapterOne() {
         <div className="mt-6">
           <BlankCard />
         </div>
-        <motion.p
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-15% 0px" }}
-          transition={{ duration: 0.7, ease: EASE }}
-          className="prose-col mt-12"
-        >
+        <p className="prose-col mt-12">
           Larger models trained on more tokens and compute became increasingly
           capable. Post-training then turned raw language models into
           assistants.
-        </motion.p>
+        </p>
 
         {/* Chapter-closing pull line + arrow divider into Chapter 2 */}
         <div className="prose-col mt-14">

@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export interface DefCardProps {
@@ -27,14 +26,9 @@ export default function DefCard({
   className,
 }: DefCardProps) {
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 28 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-15% 0px" }}
-      whileHover={{ y: -2 }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+    <article
       className={cn(
-        "rounded-[14px] border border-line bg-paper-raise p-5 transition-shadow duration-200 hover:shadow-lift",
+        "rounded-lg border border-line bg-paper-raise p-5",
         className
       )}
     >
@@ -54,6 +48,6 @@ export default function DefCard({
           {example}
         </p>
       )}
-    </motion.article>
+    </article>
   );
 }

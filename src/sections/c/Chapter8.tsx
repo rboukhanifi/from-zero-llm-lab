@@ -239,7 +239,7 @@ function QuantizationVisual() {
 export default function Chapter8() {
   return (
     <section id="chapter-08" className="border-t border-line bg-paper-deep">
-      <div className="mx-auto max-w-[1200px] px-6 py-[72px] md:px-10 md:py-[120px]">
+      <div className="mx-auto max-w-[1200px] px-6 py-14 md:px-10 md:py-20">
         <ChapterHeader
           kicker="CHAPTER 08"
           title="Inference: using the trained model"

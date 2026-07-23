@@ -132,7 +132,7 @@ export default function FinalProject() {
 
   return (
     <section id="final-project" className="border-t border-line bg-paper">
-      <div className="page-col py-[72px] md:py-[120px]">
+      <div className="page-col py-14 md:py-20">
         {/* FINAL BRIEF frame */}
         <div className="relative rounded-[18px] border-[1.5px] border-line-strong bg-paper-raise p-6 pt-10 md:p-8 md:pt-12">
           <span className="absolute -top-[13px] left-6 rounded-md border-[1.5px] border-line-strong bg-paper-raise px-3 py-1 font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-ink-soft md:left-8">

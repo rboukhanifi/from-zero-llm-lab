@@ -127,7 +127,7 @@ function ContaminationVisual() {
 export default function Chapter7() {
   return (
     <section id="chapter-07" className="border-t border-line bg-paper">
-      <div className="mx-auto max-w-[1200px] px-6 py-[72px] md:px-10 md:py-[120px]">
+      <div className="mx-auto max-w-[1200px] px-6 py-14 md:px-10 md:py-20">
         <ChapterHeader
           kicker="CHAPTER 07"
           title="Evaluation"

@@ -1,7 +1,4 @@
-import { motion } from "framer-motion";
 import StepBadge from "@/components/shared/StepBadge";
-
-const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
 /**
  * Step head row (segment-a spec): StepBadge (large, 56px) + kicker
@@ -17,24 +14,9 @@ export default function StepHead({
   kicker: string;
   title: string;
 }) {
-  const num = String(step).padStart(2, "0");
-
   return (
     <div className="relative">
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-8 right-0 select-none font-serif text-[64px] font-bold leading-none text-transparent md:text-[110px]"
-        style={{ WebkitTextStroke: "1px #CBBFA8" }}
-      >
-        {num}
-      </span>
-      <motion.div
-        initial={{ opacity: 0, y: 28 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-15% 0px" }}
-        transition={{ duration: 0.7, ease: EASE }}
-        className="flex items-center gap-4 md:gap-5"
-      >
+      <div className="flex items-center gap-4 md:gap-5">
         <StepBadge step={step} active size="lg" />
         <div>
           <p className="kicker">{kicker}</p>
@@ -42,7 +24,7 @@ export default function StepHead({
             {title}
           </h3>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

@@ -371,7 +371,7 @@ export default function Course() {
 
   return (
     <section id="course" className="border-t border-line bg-paper">
-      <div className="page-col py-[72px] md:py-[120px]">
+      <div className="page-col py-14 md:py-20">
         <ChapterHeader
           kicker="SMALL COURSE PLAN"
           title="From basic ML to training a miniature LLM"

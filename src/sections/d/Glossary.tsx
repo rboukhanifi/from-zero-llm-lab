@@ -109,7 +109,7 @@ export default function Glossary() {
 
   return (
     <section id="chapter-10" className="border-t border-line bg-paper-deep">
-      <div className="page-col py-[72px] md:py-[120px]">
+      <div className="page-col py-14 md:py-20">
         <ChapterHeader
           kicker="CHAPTER 10"
           title="Important concepts you should understand"
