@@ -4,10 +4,8 @@ import { useSmoothScroll } from "@/components/SmoothScroll";
 import { cn } from "@/lib/utils";
 
 /**
- * Fixed left-edge dot rail, vertically centered, visible ≥1280px only
- * (design.md §5). 14 dots — one per anchor. Idle: 8px line-strong dot with
- * a mono label revealed on hover. Active: 24px ember bar + permanent label.
- * Scroll spy via IntersectionObserver (-45%/-45%), click → Lenis scrollTo.
+ * Fixed left-edge chapter markers, visible on wide screens only. Labels stay
+ * in accessible names so the compact rail never overlaps the reading column.
  */
 export default function ChapterNavRail() {
   const active = useScrollSpy();
@@ -28,27 +26,17 @@ export default function ChapterNavRail() {
                 onClick={() => scrollTo(`#${item.id}`)}
                 aria-current={isActive ? "true" : undefined}
                 aria-label={`Go to ${item.label}`}
-                className="group flex items-center gap-3"
+                title={item.label}
+                className="group flex items-center"
               >
                 <span
                   className={cn(
-                    "block h-2 rounded-full transition-all duration-300",
+                    "block h-2 rounded-full",
                     isActive
                       ? "w-6 bg-ember"
                       : "w-2 bg-line-strong group-hover:bg-ink-faint"
                   )}
                 />
-                <span
-                  className={cn(
-                    "whitespace-nowrap font-mono text-[10.5px] font-medium uppercase tracking-[0.12em] transition-all duration-200",
-                    isActive
-                      ? "text-ember opacity-100"
-                      : "-translate-x-1 text-ink-faint opacity-0 group-hover:translate-x-0 group-hover:opacity-100"
-                  )}
-                >
-                  {item.num ? `${item.num} ` : ""}
-                  {item.short}
-                </span>
               </button>
             </li>
           );

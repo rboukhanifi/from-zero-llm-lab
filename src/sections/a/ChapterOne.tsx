@@ -121,7 +121,7 @@ export default function ChapterOne() {
                 label="rules.txt"
                 code={`If message contains "invoice", classify it as finance.`}
               />
-              <div aria-hidden="true" className="space-y-1 font-mono text-[11.5px] leading-[1.6] text-code-dim/70">
+              <div aria-hidden="true" className="space-y-1 font-mono text-[11.5px] leading-[1.6] text-ink-soft">
                 <p>+ if message contains "billing", classify it as finance.</p>
                 <p>+ if message contains "payment", classify it as finance.</p>
                 <p>+ … 2,412 more rules</p>
