@@ -2,7 +2,6 @@ import { useState } from "react";
 import { MotionConfig } from "framer-motion";
 import SmoothScroll from "@/components/SmoothScroll";
 import TopBar from "@/components/TopBar";
-import ChapterNavRail from "@/components/ChapterNavRail";
 import ChapterMenu from "@/components/ChapterMenu";
 import Footer from "@/components/Footer";
 import Hero from "@/sections/Hero";
@@ -20,7 +19,6 @@ export default function App() {
     <MotionConfig reducedMotion="always">
       <SmoothScroll>
         <TopBar onOpenMenu={() => setMenuOpen(true)} />
-        <ChapterNavRail />
         <ChapterMenu open={menuOpen} onOpenChange={setMenuOpen} />
         <main>
           <Hero />

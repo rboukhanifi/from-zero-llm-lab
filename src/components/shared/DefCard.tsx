@@ -14,9 +14,7 @@ export interface DefCardProps {
 }
 
 /**
- * Glossary / vocab tile (design.md §6.10): paper-raise, 1px line border,
- * term + optional alias tag + definition + optional example line.
- * Hover lifts 2px with the soft shadow.
+ * Flat glossary entry separated by a quiet rule.
  */
 export default function DefCard({
   term,
@@ -28,7 +26,7 @@ export default function DefCard({
   return (
     <article
       className={cn(
-        "rounded-lg border border-line bg-paper-raise p-5",
+        "border-b border-line py-5",
         className
       )}
     >

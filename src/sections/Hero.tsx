@@ -29,7 +29,7 @@ export default function Hero() {
           </p>
           <p>For an LLM, the central task is surprisingly simple:</p>
         </div>
-        <blockquote className="mt-8 max-w-[680px] border-l-[3px] border-ember bg-paper-deep px-6 py-5">
+        <blockquote className="mt-8 max-w-[680px] border-l-2 border-ink py-2 pl-6">
           <p className="font-serif text-[22px] font-medium italic leading-[1.4] text-ink md:text-[27px]">
             “Given previous tokens, predict the next token.”
           </p>
