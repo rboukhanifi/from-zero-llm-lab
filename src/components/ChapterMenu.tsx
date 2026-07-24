@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { X } from "lucide-react";
 import {
   Dialog,
@@ -59,17 +58,8 @@ export default function ChapterMenu({
           className="mx-auto w-full max-w-[1200px] flex-1 px-6 pb-16 pt-10 md:px-10 md:pt-16"
         >
           <ol className="flex flex-col">
-            {INDEX_ITEMS.map((item, i) => (
-              <motion.li
-                key={item.id}
-                initial={{ opacity: 0, y: 24 }}
-                animate={open ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-                transition={{
-                  duration: 0.5,
-                  delay: 0.08 + i * 0.05,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-              >
+            {INDEX_ITEMS.map((item) => (
+              <li key={item.id}>
                 <button
                   type="button"
                   onClick={() => go(item.id)}
@@ -82,7 +72,7 @@ export default function ChapterMenu({
                     {item.title}
                   </span>
                 </button>
-              </motion.li>
+              </li>
             ))}
           </ol>
         </nav>

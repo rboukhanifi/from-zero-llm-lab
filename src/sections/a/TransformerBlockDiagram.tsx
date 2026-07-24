@@ -1,11 +1,5 @@
-import { useEffect, useRef, useState } from "react";
 import { ChevronUp } from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { cn } from "@/lib/utils";
-
-gsap.registerPlugin(ScrollTrigger);
 
 /** Bottom → top order (signal flows upward). */
 const PANELS = [
@@ -25,42 +19,13 @@ const PANELS = [
  * Reduced motion: all panels lit, dot parked at the top.
  */
 export default function TransformerBlockDiagram() {
-  const reduced = useReducedMotion();
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const dotRef = useRef<HTMLDivElement>(null);
-  const [lit, setLit] = useState(0);
-
-  useEffect(() => {
-    if (reduced) {
-      setLit(PANELS.length);
-      return;
-    }
-    const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: wrapRef.current,
-        start: "top 85%",
-        end: "bottom 45%",
-        scrub: true,
-        onUpdate: (self) => {
-          if (dotRef.current) {
-            gsap.set(dotRef.current, { bottom: `${self.progress * 100}%` });
-          }
-          const count = Math.min(
-            PANELS.length,
-            Math.floor(self.progress * PANELS.length + 0.5)
-          );
-          setLit((prev) => (prev === count ? prev : count));
-        },
-      });
-    }, wrapRef);
-    return () => ctx.revert();
-  }, [reduced]);
+  const lit = PANELS.length;
 
   // Rendered top → bottom (reverse of signal order).
   const rendered = [...PANELS].reverse();
 
   return (
-    <div ref={wrapRef} className="mt-8 max-w-[760px] pb-2 pr-3 pt-6 md:pr-6">
+    <div className="mt-8 max-w-[760px] pb-2 pr-3 pt-6 md:pr-6">
       <div className="flex items-stretch gap-3 md:gap-5">
         {/* Block + ghosts */}
         <div className="relative w-full max-w-[440px]">
@@ -76,10 +41,9 @@ export default function TransformerBlockDiagram() {
             {/* Flow line + signal dot */}
             <div aria-hidden="true" className="absolute bottom-6 left-[15px] top-6 w-px bg-line" />
             <div
-              ref={dotRef}
               aria-hidden="true"
               className="absolute left-[15.5px] h-2 w-2 -translate-x-1/2 translate-y-1/2 rounded-full bg-ember"
-              style={reduced ? { bottom: "calc(100% - 24px)" } : { bottom: "24px" }}
+              style={{ bottom: "calc(100% - 24px)" }}
             />
             <div className="flex flex-col">
               {rendered.map((label, ri) => {

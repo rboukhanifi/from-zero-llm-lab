@@ -1,7 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  // Scan only code that ships. The starter includes a large unused UI catalog;
+  // excluding it keeps those utilities out of the production stylesheet.
+  content: [
+    './index.html',
+    './src/*.{js,ts,jsx,tsx}',
+    './src/components/*.{js,ts,jsx,tsx}',
+    './src/components/shared/**/*.{js,ts,jsx,tsx}',
+    './src/components/ui/dialog.tsx',
+    './src/hooks/**/*.{js,ts,jsx,tsx}',
+    './src/lib/**/*.{js,ts,jsx,tsx}',
+    './src/sections/**/*.{js,ts,jsx,tsx}',
+  ],
   theme: {
     extend: {
       fontFamily: {
@@ -10,27 +21,27 @@ module.exports = {
         mono: ["'JetBrains Mono'", "ui-monospace", "SFMono-Regular", "monospace"],
       },
       colors: {
-        // Design tokens — design.md §2
-        paper: "#FAF6EE",
-        "paper-deep": "#F2EBDD",
-        "paper-raise": "#FFFDF8",
-        ink: "#211A13",
-        "ink-soft": "#6B5F52",
-        "ink-faint": "#9C8F7F",
-        line: "#E4DAC7",
-        "line-strong": "#CBBFA8",
-        ember: "#C0531F",
-        "ember-deep": "#963E15",
-        "ember-tint": "#F7E4D5",
-        forest: "#2F5D46",
-        "forest-tint": "#E1EAE0",
-        gold: "#A87F2E",
-        "gold-tint": "#F4EACF",
-        "code-bg": "#241D15",
-        "code-text": "#EFE7D8",
-        "code-dim": "#A99B85",
-        "code-ember": "#E8976A",
-        "code-forest": "#9DBFA4",
+        // Print palette: ivory stock, white inserts, black ink, graphite rules.
+        paper: "#F7F3EA",
+        "paper-deep": "#EEE8DC",
+        "paper-raise": "#FFFEFA",
+        ink: "#171613",
+        "ink-soft": "#47433C",
+        "ink-faint": "#756F65",
+        line: "#D7CEBF",
+        "line-strong": "#AEA393",
+        ember: "#2C2924",
+        "ember-deep": "#171613",
+        "ember-tint": "#E7DFD2",
+        forest: "#393733",
+        "forest-tint": "#ECE7DE",
+        gold: "#655F57",
+        "gold-tint": "#F0ECE4",
+        "code-bg": "#191816",
+        "code-text": "#F3EFE7",
+        "code-dim": "#AAA399",
+        "code-ember": "#E2DBD0",
+        "code-forest": "#C5BEB3",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -76,7 +87,7 @@ module.exports = {
         },
       },
       borderRadius: {
-        xl: "calc(var(--radius) + 4px)",
+        xl: "calc(var(--radius) + 3px)",
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
@@ -84,7 +95,7 @@ module.exports = {
       },
       boxShadow: {
         xs: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
-        lift: "0 8px 24px rgba(33,26,19,0.07)",
+        lift: "none",
       },
       keyframes: {
         "accordion-down": {

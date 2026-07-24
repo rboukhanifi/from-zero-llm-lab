@@ -1,19 +1,8 @@
-import { useEffect, useState } from "react";
-
-/** True when the user prefers reduced motion (design.md §5 fallback contract). */
+/**
+ * The editorial experience uses its calm motion mode by default. Components
+ * still keep their reduced-motion branches so content remains fully visible
+ * without ambient loops, pinned movement, or smooth-scroll effects.
+ */
 export function useReducedMotion(): boolean {
-  const [reduced, setReduced] = useState<boolean>(
-    () =>
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  );
-
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const onChange = (e: MediaQueryListEvent) => setReduced(e.matches);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
-
-  return reduced;
+  return true;
 }

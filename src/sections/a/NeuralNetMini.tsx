@@ -1,5 +1,3 @@
-import { motion } from "framer-motion";
-
 /**
  * Stop 3 card visual (segment-a spec): mini SVG of 3 columns of dots
  * (input 4 / hidden 5 / output 2) connected by thin line-strong paths.
@@ -32,17 +30,14 @@ export default function NeuralNetMini() {
   }
 
   return (
-    <motion.svg
+    <svg
       viewBox={`0 0 ${W} ${H}`}
       className="mt-4 w-full max-w-[260px]"
       role="img"
       aria-label="A small neural network: four inputs, five hidden units, two outputs"
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, margin: "-15% 0px" }}
     >
-      {paths.map((p, i) => (
-        <motion.line
+      {paths.map((p) => (
+        <line
           key={p.key}
           x1={p.x1}
           y1={p.y1}
@@ -50,27 +45,21 @@ export default function NeuralNetMini() {
           y2={p.y2}
           className="stroke-line-strong"
           strokeWidth={1}
-          variants={{
-            hidden: { pathLength: 0, opacity: 0 },
-            show: { pathLength: 1, opacity: 0.7 },
-          }}
-          transition={{ duration: 1, delay: i * 0.1, ease: "easeOut" }}
+          opacity={0.7}
         />
       ))}
       {COLS.map((count, c) =>
         Array.from({ length: count }, (_, i) => (
-          <motion.circle
+          <circle
             key={`n-${c}-${i}`}
             cx={COL_X[c]}
             cy={nodeY(count, i)}
             r={5}
             className="fill-paper-raise stroke-ink-soft"
             strokeWidth={1.5}
-            variants={{ hidden: { scale: 0, opacity: 0 }, show: { scale: 1, opacity: 1 } }}
-            transition={{ duration: 0.4, delay: 0.2 + c * 0.25 + i * 0.05 }}
           />
         ))
       )}
-    </motion.svg>
+    </svg>
   );
 }

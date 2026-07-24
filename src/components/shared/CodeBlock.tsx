@@ -1,8 +1,5 @@
 import { useMemo, type ReactNode } from "react";
-import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-
-const EASE_OUT_EXPO = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
 export interface CodeBlockProps {
   /** Raw code text. Lines stagger-fade the first time the block enters view.
@@ -32,11 +29,7 @@ export default function CodeBlock({
   const lines = useMemo(() => (code !== undefined ? code.split("\n") : null), [code]);
 
   return (
-    <motion.figure
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-15% 0px" }}
-      transition={{ duration: 0.7, ease: EASE_OUT_EXPO }}
+    <figure
       className={cn(
         "overflow-hidden rounded-xl bg-code-bg text-code-text",
         className
@@ -59,19 +52,15 @@ export default function CodeBlock({
           {children !== undefined
             ? children
             : lines?.map((line, i) => (
-                <motion.span
+                <span
                   key={i}
                   className="block min-h-[1.65em] whitespace-pre"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true, margin: "-15% 0px" }}
-                  transition={{ duration: 0.4, delay: 0.3 + i * 0.05 }}
                 >
                   {line === "" ? " " : line}
-                </motion.span>
+                </span>
               ))}
         </code>
       </pre>
-    </motion.figure>
+    </figure>
   );
 }

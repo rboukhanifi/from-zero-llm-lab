@@ -217,7 +217,7 @@ export default function Chapter5() {
 
   return (
     <section id="chapter-05" className="border-t border-line bg-paper">
-      <div className="mx-auto max-w-[1200px] px-6 py-[72px] md:px-10 md:py-[120px]">
+      <div className="mx-auto max-w-[1200px] px-6 py-14 md:px-10 md:py-20">
         <ChapterHeader
           kicker="CHAPTER 05"
           title="Pretraining versus post-training"

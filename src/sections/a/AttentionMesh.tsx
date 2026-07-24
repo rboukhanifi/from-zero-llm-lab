@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
 import TokenChip from "@/components/shared/TokenChip";
 import { SEQ_TOKENS } from "@/sections/a/seqTokens";
 import { cn } from "@/lib/utils";
@@ -50,12 +49,7 @@ export default function AttentionMesh() {
   }, [measure]);
 
   return (
-    <motion.div
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, margin: "-15% 0px" }}
-      className="mt-4"
-    >
+    <div className="mt-4">
       <div ref={containerRef} className="relative">
         {/* Full-mesh connectors behind the chips */}
         <svg
@@ -85,16 +79,11 @@ export default function AttentionMesh() {
         </svg>
         <div className="relative z-10 flex flex-wrap items-center gap-x-2 gap-y-3">
           {SEQ_TOKENS.map((tok, i) => (
-            <motion.span
+            <span
               key={i}
               ref={(el) => {
                 chipRefs.current[i] = el;
               }}
-              variants={{
-                hidden: { opacity: 0, scale: 0.85 },
-                show: { opacity: 1, scale: 1 },
-              }}
-              transition={{ duration: 0.4, delay: i * 0.08, ease: [0.34, 1.56, 0.64, 1] }}
               className="inline-flex cursor-default"
               onMouseEnter={() => setHot(i)}
               onMouseLeave={() => setHot(null)}
@@ -109,17 +98,15 @@ export default function AttentionMesh() {
               >
                 {tok.label}
               </TokenChip>
-            </motion.span>
+            </span>
           ))}
         </div>
       </div>
-      <motion.p
-        variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}
-        transition={{ duration: 0.5, delay: 0.6 }}
+      <p
         className="mt-3 font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-ink-faint"
       >
         Attention — every token examines every other token
-      </motion.p>
-    </motion.div>
+      </p>
+    </div>
   );
 }

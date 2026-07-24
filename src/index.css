@@ -4,35 +4,35 @@
 
 @layer base {
   :root {
-    /* shadcn vars remapped to the warm paper-and-ink palette (design.md §2) */
-    --background: 40 52% 96%;          /* #FAF6EE paper */
-    --foreground: 28 27% 10%;          /* #211A13 ink */
-    --card: 44 100% 99%;               /* #FFFDF8 paper-raise */
-    --card-foreground: 28 27% 10%;
-    --popover: 44 100% 99%;
-    --popover-foreground: 28 27% 10%;
-    --primary: 19 73% 44%;             /* #C0531F ember */
-    --primary-foreground: 40 52% 96%;
-    --secondary: 38 34% 91%;           /* #F2EBDD paper-deep */
-    --secondary-foreground: 28 27% 10%;
-    --muted: 38 34% 91%;
-    --muted-foreground: 29 14% 37%;    /* #6B5F52 ink-soft */
-    --accent: 24 61% 90%;              /* #F7E4D5 ember-tint */
-    --accent-foreground: 21 73% 34%;   /* #963E15 ember-deep */
-    --destructive: 21 73% 34%;
-    --destructive-foreground: 40 52% 96%;
-    --border: 37 31% 84%;              /* #E4DAC7 line */
-    --input: 37 31% 84%;
-    --ring: 19 73% 44%;
-    --radius: 0.875rem;                /* 14px card radius */
-    --sidebar-background: 40 52% 96%;
-    --sidebar-foreground: 28 27% 10%;
-    --sidebar-primary: 19 73% 44%;
-    --sidebar-primary-foreground: 40 52% 96%;
-    --sidebar-accent: 38 34% 91%;
-    --sidebar-accent-foreground: 28 27% 10%;
-    --sidebar-border: 37 31% 84%;
-    --sidebar-ring: 19 73% 44%;
+    /* High-contrast print palette: ivory stock, white cards, near-black ink. */
+    --background: 42 45% 94%;          /* #F7F3EA paper */
+    --foreground: 45 10% 8%;           /* #171613 printer black */
+    --card: 48 100% 99%;               /* #FFFEFA clean page */
+    --card-foreground: 45 10% 8%;
+    --popover: 48 100% 99%;
+    --popover-foreground: 45 10% 8%;
+    --primary: 38 10% 16%;             /* #2C2924 graphite */
+    --primary-foreground: 48 100% 99%;
+    --secondary: 40 35% 90%;           /* #EEE8DC beige wash */
+    --secondary-foreground: 45 10% 8%;
+    --muted: 40 35% 90%;
+    --muted-foreground: 38 8% 26%;     /* #47433C soft ink */
+    --accent: 37 30% 86%;              /* #E7DFD2 ruled-paper tint */
+    --accent-foreground: 45 10% 8%;
+    --destructive: 45 10% 8%;
+    --destructive-foreground: 48 100% 99%;
+    --border: 38 23% 80%;              /* #D7CEBF rule */
+    --input: 38 23% 80%;
+    --ring: 38 10% 16%;
+    --radius: 0rem;
+    --sidebar-background: 42 45% 94%;
+    --sidebar-foreground: 45 10% 8%;
+    --sidebar-primary: 38 10% 16%;
+    --sidebar-primary-foreground: 48 100% 99%;
+    --sidebar-accent: 40 35% 90%;
+    --sidebar-accent-foreground: 45 10% 8%;
+    --sidebar-border: 38 23% 80%;
+    --sidebar-ring: 38 10% 16%;
   }
 }
 
@@ -45,9 +45,19 @@
   }
   body {
     @apply bg-paper text-ink font-sans antialiased;
-    font-size: 17.5px;
-    line-height: 1.75;
+    font-size: 17px;
+    line-height: 1.8;
     text-rendering: optimizeLegibility;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    pointer-events: none;
+    opacity: 0.022;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='3' seed='14' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)' opacity='.72'/%3E%3C/svg%3E");
   }
   @media (max-width: 767px) {
     body {
@@ -56,10 +66,14 @@
   }
   h1, h2, h3, .font-serif {
     font-feature-settings: "liga";
+    text-wrap: balance;
+  }
+  p, li {
+    text-wrap: pretty;
   }
   ::selection {
-    background: #F7E4D5;
-    color: #211A13;
+    background: #E7DFD2;
+    color: #171613;
   }
   a {
     @apply text-ember-deep underline-offset-4;
@@ -73,34 +87,18 @@
   }
   /* Keyboard focus visibility across the editorial chrome */
   :focus-visible {
-    outline: 2px solid #C0531F;
+    outline: 2px solid #171613;
     outline-offset: 2px;
     border-radius: 4px;
   }
 }
 
 @layer components {
-  /* Paper grain — fixed full-page SVG feTurbulence noise overlay at 3.5%
-     opacity, multiply blend (design.md §7.6). Pure inline SVG, no asset. */
-  .paper-grain {
-    position: fixed;
-    inset: 0;
-    z-index: 60;
-    pointer-events: none;
-    opacity: 0.035;
-    mix-blend-mode: multiply;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23g)'/%3E%3C/svg%3E");
-  }
-
   /* Kicker / eyebrow — uppercase mono with leading ember square (design.md §3) */
   .kicker {
-    @apply font-mono text-[12.5px] max-md:text-[11.5px] font-medium uppercase text-ember;
+    @apply font-mono text-[12.5px] max-md:text-[11.5px] font-medium uppercase text-ink-faint;
     letter-spacing: 0.14em;
     line-height: 1.4;
-  }
-  .kicker::before {
-    content: "■";
-    @apply mr-2 inline-block text-[8px] align-[2px];
   }
 
   /* Prose column: 680px max, centered (design.md §4) */
@@ -108,19 +106,10 @@
     @apply mx-auto w-full max-w-[680px] px-6 md:px-0;
   }
   .page-col {
-    @apply mx-auto w-full max-w-[1200px] px-6 md:px-10;
-  }
-  .wide-col {
     @apply mx-auto w-full max-w-[1080px] px-6 md:px-10;
   }
-
-  /* Hero scroll cue: ember segment travels down a 48px hairline, 1.6s loop */
-  @keyframes cue-travel {
-    0% { transform: translateY(-100%); }
-    100% { transform: translateY(400%); }
-  }
-  .scroll-cue-segment {
-    animation: cue-travel 1.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  .wide-col {
+    @apply mx-auto w-full max-w-[1000px] px-6 md:px-10;
   }
 }
 
